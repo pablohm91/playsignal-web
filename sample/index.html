@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sample report · Playsignal</title>
+<style>
+  :root {
+    --bg:#ffffff; --fg:#1a1a2e; --muted:#5a5a72; --line:#e4e4ef;
+    --accent:#6d4aff; --accent-soft:#efeaff; --card:#faf9ff;
+    --complaint:#e05a5a; --praise:#2fa96b; --confusion:#e0a63a;
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--fg);
+    font:16px/1.55 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; }
+  .wrap { max-width:920px; margin:0 auto; padding:0 20px 64px; }
+  header.top { background:linear-gradient(135deg,var(--accent),#9b7bff); color:#fff;
+    padding:40px 20px; margin-bottom:32px; }
+  header.top .wrap { padding-bottom:0; }
+  header.top h1 { margin:0 0 6px; font-size:30px; }
+  header.top p { margin:0; opacity:.9; }
+  h2 { font-size:22px; margin:40px 0 14px; padding-bottom:8px; border-bottom:2px solid var(--line); }
+  .tiles { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin:0 0 24px; }
+  .refs { display:block; font-size:12px; color:var(--muted); margin-top:2px; }
+  .qctx { display:block; font-size:12px; color:var(--muted); font-style:italic; margin:1px 0 4px; }
+  .spotc { font-size:10px; text-transform:none; line-height:1.35; display:inline-block; margin-top:6px; letter-spacing:0; }
+  .takeaways li { margin-bottom:8px; }
+  .tile { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:16px; text-align:center; }
+  .tile-num { font-size:26px; font-weight:700; color:var(--accent); }
+  .tile-label { font-size:12px; color:var(--muted); }
+  .takeaways { background:var(--accent-soft); border-radius:12px; padding:16px 16px 16px 36px; }
+  .card { display:flex; gap:16px; background:var(--card); border:1px solid var(--line);
+    border-radius:12px; padding:16px; margin-bottom:12px; }
+  .card-head { flex:0 0 64px; text-align:center; border-right:1px solid var(--line); padding-right:12px; }
+  .count { font-size:30px; font-weight:800; color:var(--accent); display:block; line-height:1; }
+  .count-label { font-size:11px; color:var(--muted); text-transform:uppercase; }
+  .card-body { flex:1; }
+  .theme-title { margin:0 0 4px; font-weight:700; font-size:16px; }
+  .mtype { font-size:11px; font-weight:600; color:var(--muted); text-transform:capitalize;
+    line-height:1.5; }
+  blockquote { margin:6px 0; font-size:15px; font-style:italic; color:#3a3a52; }
+  .note { margin:0 0 8px; color:var(--muted); }
+  .conflict { margin:0 0 6px; padding:6px 10px; background:#fdecec; border-left:3px solid var(--complaint);
+    border-radius:4px; font-size:13px; color:#8a2a2a; }
+  :root:not([data-theme="light"]) .conflict, :root[data-theme="dark"] .conflict { background:#3a1e1e; color:#f0b0b0; }
+  ul.quotes { margin:0; padding-left:18px; }
+  ul.quotes li { margin:3px 0; font-size:14px; }
+  ul.quotes li a { color:var(--accent); text-decoration:none; white-space:nowrap; font-size:13px; }
+  ul.quotes li a:hover { text-decoration:underline; }
+  img.thumb { display:block; width:200px; border-radius:6px; margin:5px 0 12px;
+    border:1px solid var(--line); }
+  .flagged { margin-top:8px; font-size:12px; color:var(--muted); } .flagged li { margin:2px 0; }
+  .weak { font-size:12px; color:#b45309; margin:2px 0 6px; }
+  @media print { img.thumb { display:none !important; } .noprint { display:none !important; } }
+  .evidence { margin:0; font-size:13px; }
+  .evidence a, td a { color:var(--accent); text-decoration:none; }
+  .evidence a:hover, td a:hover { text-decoration:underline; }
+  table { width:100%; border-collapse:collapse; font-size:14px; }
+  th, td { text-align:left; padding:8px 10px; border-bottom:1px solid var(--line); vertical-align:top; }
+  th { font-size:12px; text-transform:uppercase; color:var(--muted); }
+  td.num { text-align:right; white-space:nowrap; font-variant-numeric:tabular-nums; }
+  .snippet { color:var(--muted); font-size:13px; }
+  .snippet.chat { font-style:italic; }
+  .empty { color:var(--muted); font-style:italic; }
+  footer { margin-top:48px; padding-top:16px; border-top:1px solid var(--line);
+    font-size:12px; color:var(--muted); }
+  @media (max-width:640px) { .tiles { grid-template-columns:repeat(2,1fr); } }
+  @media print { header.top { -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+    .card, .tile { break-inside:avoid; }
+    h2 { break-after:avoid; break-inside:avoid; }
+    h2 + p { break-after:avoid; break-inside:avoid; }
+    h2 + p + .card, h2 + .card { break-before:avoid; } }
+
+.sample-banner{max-width:900px;margin:20px auto 0;padding:14px 18px;border-radius:12px;
+  background:#f1edff;border:1px solid #d9d0ff;color:#2a2350;font-size:14.5px;line-height:1.5}
+.sample-banner a{display:inline-block;margin-left:6px;color:#6c4cff;font-weight:600}
+span.ts{color:#6c4cff;white-space:nowrap}
+</style>
+</head>
+<body>
+<div class="sample-banner">
+  <b>Sample report.</b> A real Playsignal report from a recent indie survival horror launch, shown with
+  the game and streamer names removed. In the reports we deliver, every quote links to the exact moment
+  in the stream; here the timestamps are kept but the links are disabled.
+  <a href="../">← Back to playsignal.games</a>
+</div>
+
+<header class="top"><div class="wrap">
+  <h1>Playtesting from streams · Sample report</h1>
+  <p>Report on 15 streamers · generated 2026-10-08 · Playsignal</p>
+</div></header>
+<div class="wrap">
+
+  <h2>Executive summary</h2>
+  <div class="tiles"><div class="tile"><div class="tile-num">15</div><div class="tile-label">Streamers analyzed</div></div>
+<div class="tile"><div class="tile-num">34.3</div><div class="tile-label">Hours played</div></div>
+<div class="tile"><div class="tile-num">10/15</div><div class="tile-label">Finished the game</div></div>
+<div class="tile"><div class="tile-num">3</div><div class="tile-label">Bugs found</div></div></div>
+  <ul class="takeaways"><li><strong>Point players to where keys and items are used</strong> — 12 of 15 streamers held a key, lever or crest without knowing which door it opens, and several walked in circles looking for named rooms. One ended the stream for the night after failing to find the next key.</li>
+<li><strong>Make enemy attacks and weak points readable</strong> — 8 of 15 found attack patterns and stuns inconsistent or didn&#x27;t know where to shoot, and 3 ran out of ammo mid-fight, including right before a boss.</li>
+<li><strong>Fix the weapon-switch lock and the flashlight resetting on save</strong> — One streamer got stuck on the knife, couldn&#x27;t switch back even after reloading, and quit the game. Separately, the flashlight switches off every time the game is saved.</li>
+<li><strong>Stopped playing because of the game</strong>: 1 due to a bug or technical issue (Streamer A); 1 out of frustration (Streamer B).</li>
+<li><strong>What players love most</strong> (4 streamers): Art Direction and Visual Style — Streamers consistently praise the game&#x27;s art direction, retro aesthetic, and overall visual design as standout elements.</li></ul>
+
+  <h2>Fix first: bugs and blockers <span style="color:var(--complaint)">●</span></h2>
+<p class="snippet">Technical problems streamers hit live. Listed even if only one streamer hit them: each links to the exact moment so your team can reproduce it.</p>
+
+        <div class="card">
+          <div class="card-head">
+            <span class="count">1</span>
+            <span class="count-label">streamer</span>
+          </div>
+          <div class="card-body">
+            <p class="theme-title">Cannot switch weapons or switch back</p>
+            
+            <p class="note">One streamer got stuck on the knife and couldn&#x27;t switch back to a gun, even after reloading a save. They ended the session and switched to another game.</p>
+            
+            <ul class="quotes"><li>“no way to switch the weapon” <span class="ts">Streamer A · 1h38m</span><span class="qctx">Streamer is frustrated that the game won&#x27;t let them switch weapons and considers switching to another game.</span></li>
+<li>“not letting me switch back” <span class="ts">Streamer A · 1h38m</span><span class="qctx">Streamer is frustrated that the game won&#x27;t let them switch weapons and considers switching to another game.</span></li></ul>
+            
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <span class="count">1</span>
+            <span class="count-label">streamer</span>
+          </div>
+          <div class="card-body">
+            <p class="theme-title">Item pickups and interactions don&#x27;t respond</p>
+            
+            <p class="note">One streamer repeatedly couldn&#x27;t pick up items or use objects, and named it the most frustrating part of the game in their closing verdict.</p>
+            
+            <ul class="quotes"><li>“the interactions don&#x27;t work” <span class="ts">Streamer C · 2h08m</span><span class="qctx">Trying to interact with objects after a chase, then checking a helmet on the back.</span></li></ul>
+            
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <span class="count">1</span>
+            <span class="count-label">streamer</span>
+          </div>
+          <div class="card-body">
+            <p class="theme-title">Enemies hit player through solid walls</p>
+            
+            <p class="note">A streamer standing behind a wall was stabbed by an enemy through the wall.</p>
+            
+            <ul class="quotes"><li>“get stabbed through the wall” <span class="ts">Streamer B · 0h59m</span><span class="qctx">Streamer stays behind a wall while an enemy attacks, then looks for ammunition after saving.</span></li></ul>
+            
+          </div>
+        </div>
+
+  <h2>Where players struggle <span style="color:var(--confusion)">●</span></h2>
+<p class="snippet">Specific places, bosses and puzzles where frustration, confusion, bugs and quitting cluster. The number is how many streamers had trouble there, out of those who mention it.</p>
+
+        <div class="card">
+          <div class="card-head">
+            <span class="count">3</span>
+            <span class="count-label">of 4<br><span class='spotc'>1 bugs · 3 frustration · 7 confusion · 9 complaints</span></span>
+          </div>
+          <div class="card-body">
+            <p class="theme-title">Pinhead dolls hit hard and get through doors</p>
+            
+            <p class="note">The pin-headed dolls deal a lot of damage, and players were surprised that they open doors and keep chasing, so a closed door is no refuge.</p>
+            
+            <ul class="quotes"><li>“Uh, those pinheads are really annoying to fight and they do a lot of damage” <span class="ts">Streamer D · 0h16m</span><span class="qctx">Fighting a pinhead doll in the basement while looking for the study key; ammo was refilled.</span></li>
+<li>“Ain&#x27;t no way that bitch opens the door on her own” <span class="ts">Streamer E · 0h30m</span><span class="qctx">Fleeing from a pinhead-looking enemy and commenting that it cannot open the door by itself.</span></li>
+<li>“oh shit oh no oh no” <span class="ts">Streamer F · 0h23m</span><span class="qctx">After solving a puzzle, an enemy attacks and deals heavy damage to the player.</span></li></ul>
+            
+          </div>
+        </div>
+
+  <h2>Recurring complaints <span style="color:var(--complaint)">●</span></h2>
+  <p class="snippet">Sorted by number of streamers who mention it. Each link opens the VOD at the exact minute.</p>
+  
+        <div class="card">
+          <div class="card-head">
+            <span class="count">8</span>
+            <span class="count-label">streamers</span>
+          </div>
+          <div class="card-body">
+            <p class="theme-title">Enemy attacks and weak points poorly communicated</p>
+            
+            <p class="note">Players say attack patterns are unclear and inconsistent, enemies appear suddenly and soak up hits with unpredictable stuns. They are also unsure where to shoot or whether enemies can be damaged. They ask for more consistent telegraphing.</p>
+            
+            <ul class="quotes"><li>“monsters in this game kind of just, like, jump out of me from frickin&#x27; nowhere” <span class="ts">Streamer E · 0h37m</span><span class="qctx">Exploring the mansion with a new knife, checking the map for the workshop while enemies appear suddenly.</span></li>
+<li>“He&#x27;s not very clear with his attack pattern, either.” <span class="ts">Streamer G · 3h22m</span><span class="qctx">Fighting an enemy and getting hit after misjudging distance.</span></li>
+<li>“it doesn&#x27;t charge at me all the time” <span class="ts">Streamer A · 0h49m</span><span class="qctx">Fighting an enemy that rarely charges, considering lowering difficulty for story progression.</span></li>
+<li>“boss is um annoying it doesn&#x27;t want to fall over anymore” <span class="ts">Streamer D · 0h59m</span><span class="qctx">Fighting a boss on high difficulty with no health or ammo nearby, waiting for it to fall.</span></li>
+<li>“Dude, sometimes it takes a ton to get stunned” <span class="ts">Streamer H · 2h31m</span><span class="qctx">Fighting an enemy and commenting on how inconsistently it gets stunned.</span></li>
+<li>“It&#x27;s not like no feedback that I&#x27;m hitting the guy” <span class="ts">Streamer C · 1h23m</span><span class="qctx">Shooting an enemy and trying to figure out how to damage it.</span></li>
+<li>“this combat is too jank” <span class="ts">Streamer E · 0h32m</span><span class="qctx">Exploring the mansion, then commenting on combat after being unable to slash a blocking enemy.</span></li>
+<li>“Could you be a little more consistent with your telegraphs?” <span class="ts">Streamer G · 3h24m</span><span class="qctx">Fighting a boss, trying to find an attack window and reeling in while the enemy&#x27;s attacks vary.</span></li>
+<li>“a little bit more telegraphing on the attacks” <span class="ts">Streamer D · 1h33m</span><span class="qctx">Fighting a boss with a knife; the boss stabs with pincers when close and is briefly invulnerable.</span></li>
+<li>“Oh, I was shooting the wrong part of the body” <span class="ts">Streamer I · 2h00m</span><span class="qctx">Shooting an enemy standing on something and noticing it takes no damage, then reconsidering where to aim.</span></li>
+<li>“Do I need to shoot him on the back?” <span class="ts">Streamer C · 1h19m</span><span class="qctx">Fighting an enemy and trying to figure out whether to shoot its back or chest.</span></li>
+<li>“I didn&#x27;t know I was supposed to use the pillars.” <span class="ts">Streamer F · 1h13m</span><span class="qctx">Fighting a boss, learning that the pillars can be used to damage it.</span></li>
+<li>“These, like, little things I was standing on?” <span class="ts">Streamer D · 1h37m</span><span class="qctx">Watching a walkthrough after losing to a boss, discovering floor objects were breakable.</span></li></ul>
+            
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <span class="count">4</span>
+            <span class="count-label">streamers</span>
+          </div>
+          <div class="card-body">
+            <p class="theme-title">Dark visuals and weak flashlight</p>
+            
+            <p class="note">Players struggle to see in dark rooms and call the flashlight weak. It also switches off every time the game is saved.</p>
+            
+            <ul class="quotes"><li>“i don&#x27;t like how dark that fucking door is” <span class="ts">Streamer J · 0h33m</span><span class="qctx">Reading books and examining objects in a library room, then looking at a dark door.</span></li>
+<li>“Why the flashlight turns off every time I save?” <span class="ts">Streamer C · 1h47m</span><span class="qctx">Exploring the main hall area with keys and locked gates, flashlight turned off after saving.</span></li>
+<li>“this is not a very good flashlight” <span class="ts">Streamer G · 2h12m</span><span class="qctx">Looking for where a lever goes, using the flashlight in a dark room.</span></li>
+<li>“i can&#x27;t see nothing” <span class="ts">Streamer K · 0h15m</span><span class="qctx">Entering the mansion at night in the rain, finding the screen very dark.</span></li></ul>
+            
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <span class="count">3</span>
+            <span class="count-label">streamers</span>
+          </div>
+          <div class="card-body">
+            <p class="theme-title">Ammo and weapons run short in fights</p>
+            
+            <p class="note">Players run out of bullets or shotgun shells mid-fight and fall back on the knife, including against a boss that comes right after a run of enemies.</p>
+            
+            <ul class="quotes"><li>“i don&#x27;t have any bullets and that&#x27;s all two more shots i mean zero shots” <span class="ts">Streamer L · 0h45m</span><span class="qctx">Fighting an enemy with a pistol, running out of bullets while it is still alive.</span></li>
+<li>“Oh my god need ammo. I need help and ammo” <span class="ts">Streamer J · 1h54m</span><span class="qctx">In the basement with a spider nearby, low on ammunition.</span></li>
+<li>“If I just had like a couple more shotgun rounds, I could clean house here” <span class="ts">Streamer D · 1h13m</span><span class="qctx">Fighting a fast-attacking enemy, low on shotgun ammo and considering using only the knife.</span></li>
+<li>“I have to do two cycles of him” <span class="ts">Streamer D · 1h17m</span><span class="qctx">Fighting a mask-covered boss with a knife after a gauntlet of enemies drained resources.</span></li></ul>
+            
+          </div>
+        </div>
+
+  <h2>Where players get stuck (confusion) <span style="color:var(--confusion)">●</span></h2>
+  
+        <div class="card">
+          <div class="card-head">
+            <span class="count">12</span>
+            <span class="count-label">streamers</span>
+          </div>
+          <div class="card-body">
+            <p class="theme-title">No guidance on where items and keys go</p>
+            
+            <p class="note">Players hold keys, levers, crests and records but can&#x27;t tell which door or room they belong to, and meet locked doors with no hint of what is needed. Several lose track of named rooms such as the treasure room or the pump room and walk in circles; one ended the stream for the night after failing to find the next key.</p>
+            
+            <ul class="quotes"><li>“i&#x27;m what i&#x27;m what exactly where are we supposed to go with the family crest” <span class="ts">Streamer B · 1h09m</span><span class="qctx">Holding the family crest piece and searching for where to use it, with five bullets left.</span></li>
+<li>“Where I&#x27;m trying to think, where would we use his Cresta?” <span class="ts">Streamer K · 0h59m</span><span class="qctx">Walking between doors with a half family crest, trying to figure out which room it belongs to.</span></li>
+<li>“It just says, use the family crest, but I have not seen where.” <span class="ts">Streamer M · 0h52m</span><span class="qctx">Considering the parlor as the place to use the family crest, which the game says to use.</span></li>
+<li>“um the lever was for over here which room is it for” <span class="ts">Streamer J · 0h54m</span><span class="qctx">Holding a lever after reaching the playroom, trying to work out which locked door it belongs to.</span></li>
+<li>“Okay, so where do we use this lever?” <span class="ts">Streamer B · 0h34m</span><span class="qctx">Just picked up a lever in the west hall and searching nearby rooms for where it goes.</span></li>
+<li>“Okay, so we got the key for this but none of these doors open” <span class="ts">Streamer C · 1h47m</span><span class="qctx">Holding a newly found key and trying several doors, none of which open.</span></li>
+<li>“i open the all doors right nope” <span class="ts">Streamer L · 0h36m</span><span class="qctx">Just picked up a ritual mask and wondering which door it opens after trying doors.</span></li>
+<li>“i gotta find the missing pages but i don&#x27;t see a single page in here” <span class="ts">Streamer K · 1h47m</span><span class="qctx">Searching the utility room after breaking into a door with shotgun shells, looking for missing pages and finding a code.</span></li>
+<li>“I&#x27;m trying to find a key, but it seems like there&#x27;s no key left” <span class="ts">Streamer B · 1h54m</span><span class="qctx">Unable to enter the Underground Workshop and other areas because no key can be found.</span></li>
+<li>“The workshop key has to be somewhere” <span class="ts">Streamer E · 2h22m</span><span class="qctx">Exploring a laboratory after reading a blueprint, searching for the workshop key, possibly in the archive.</span></li>
+<li>“i actually kind of forgot i&#x27;m not gonna lie i forgot where it would go” <span class="ts">Streamer G · 2h12m</span><span class="qctx">Searching for where to use a lever item while a door is jammed in the mansion.</span></li>
+<li>“fuck no okay where was the treasure room it was upstairs wasn&#x27;t it” <span class="ts">Streamer F · 0h39m</span><span class="qctx">Trying to find the treasure room after a conversation with [character], navigating a hallway of doors.</span></li>
+<li>“i don&#x27;t even know where the crap i&#x27;m supposed to go” <span class="ts">Streamer A · 0h37m</span><span class="qctx">Holding a vinyl record with a locked door, unsure where to go to use it.</span></li>
+<li>“I don&#x27;t know where to go.” <span class="ts">Streamer K · 0h55m</span><span class="qctx">Fleeing an enemy after a door jammed, trying to work out which rooms to visit.</span></li>
+<li>“where the heck do i go” <span class="ts">Streamer B · 0h55m</span><span class="qctx">Wandering the mansion in circles looking for a door before finding the red gem.</span></li>
+<li>“What the fuck is the pump room?” <span class="ts">Streamer D · 0h15m</span><span class="qctx">Checking the map after finding a pump room key, unsure which room the pump room refers to.</span></li>
+<li>“Can&#x27;t open any of those” <span class="ts">Streamer B · 1h51m</span><span class="qctx">Trying to open multiple objects in the underground workshop area and being unable to.</span></li>
+<li>“Where do I even need a lever?” <span class="ts">Streamer H · 0h43m</span><span class="qctx">In the playroom with nothing in it, noticing a lever appeared and unsure where to use it.</span></li></ul>
+            
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <span class="count">7</span>
+            <span class="count-label">streamers</span>
+          </div>
+          <div class="card-body">
+            <p class="theme-title">Puzzle solutions and requirements unclear</p>
+            
+            <p class="note">Players do not know what to do with the book or wine, in what order to act, or how to read clues such as the scratched-out dates. They call the puzzles illogical and say they make no sense.</p>
+            
+            <ul class="quotes"><li>“the book these puzzles make no sense” <span class="ts">Streamer N · 0h21m</span><span class="qctx">Confused by puzzles and a hint to use the book, checking the controls.</span></li>
+<li>“Do I need to do this in a specific order or something?” <span class="ts">Streamer C · 1h48m</span><span class="qctx">Has a key but none of the doors open, wondering about a required order.</span></li>
+<li>“Just drink it? Pour it on the book?” <span class="ts">Streamer H · 2h16m</span><span class="qctx">Holding wine, unsure whether to drink it or pour it on the book.</span></li>
+<li>“Do I have to go down there before I can, like, do this puzzle?” <span class="ts">Streamer D · 0h16m</span><span class="qctx">Reading a note about the study key being in the flooded basement, with puzzle missing a vessel name.</span></li>
+<li>“What do I use the book on?” <span class="ts">Streamer A · 1h00m</span><span class="qctx">Examining a locked door with a three-hole lock while holding a book item.</span></li>
+<li>“I don&#x27;t know what the hell that is” <span class="ts">Streamer H · 2h12m</span><span class="qctx">Trying to work out the digits of a numeric code, unsure whether a digit is a 7 or a 5.</span></li>
+<li>“don&#x27;t ever give me a puzzle like that again” <span class="ts">Streamer F · 1h36m</span><span class="qctx">Trying many dates on a timeline-based puzzle before a family story note about the underground workshop appears.</span></li>
+<li>“puzzles don&#x27;t make any sense” <span class="ts">Streamer N · 1h32m</span><span class="qctx">Looting an area while another player&#x27;s route is mentioned, and commenting on the game&#x27;s puzzles.</span></li>
+<li>“This is a shit puzzle.” <span class="ts">Streamer M · 1h24m</span><span class="qctx">Working out family birth and death years from a note with scratched-out text to solve a puzzle.</span></li></ul>
+            
+          </div>
+        </div>
+
+  
+
+  <h2>Recurring praise <span style="color:var(--praise)">●</span></h2>
+  
+        <div class="card">
+          <div class="card-head">
+            <span class="count">4</span>
+            <span class="count-label">streamers</span>
+          </div>
+          <div class="card-body">
+            <p class="theme-title">Art Direction and Visual Style</p>
+            
+            <p class="note">Streamers consistently praise the game&#x27;s art direction, retro aesthetic, and overall visual design as standout elements.</p>
+            
+            <ul class="quotes"><li>“i like it especially the also the retro style” <span class="ts">Streamer C · 0h36m</span></li>
+<li>“it&#x27;s... really has a really good art direction” <span class="ts">Streamer G · 3h57m</span></li>
+<li>“it does give me the old school vibes” <span class="ts">Streamer I · 0h13m</span></li>
+<li>“I kind of like this art theme” <span class="ts">Streamer F · 0h07m</span></li></ul>
+            
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <span class="count">3</span>
+            <span class="count-label">streamers</span>
+          </div>
+          <div class="card-body">
+            <p class="theme-title">Immersive and Creepy Atmosphere</p>
+            
+            <p class="note">Streamers highlight how the game&#x27;s atmosphere, ambient design, and overall vibe create an immersive and creepy experience.</p>
+            
+            <ul class="quotes"><li>“But, like, it does make it a lot scarier and more immersive” <span class="ts">Streamer D · 0h10m</span></li>
+<li>“it&#x27;s definitely giving me the creep” <span class="ts">Streamer O · 0h59m</span></li>
+<li>“i love the ambient” <span class="ts">Streamer I · 0h53m</span></li></ul>
+            
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <span class="count">3</span>
+            <span class="count-label">streamers</span>
+          </div>
+          <div class="card-body">
+            <p class="theme-title">Tough, Well-Balanced Difficulty and Fast Deaths</p>
+            
+            <p class="note">Streamers like the hardcore difficulty, how quickly the player dies, and call the balancing perfect.</p>
+            
+            <ul class="quotes"><li>“i do like how i do like how fast you die” <span class="ts">Streamer G · 2h19m</span></li>
+<li>“this game is so hardcore” <span class="ts">Streamer N · 0h34m</span></li>
+<li>“balancing has been perfect” <span class="ts">Streamer D · 1h16m</span></li></ul>
+            
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <span class="count">3</span>
+            <span class="count-label">streamers</span>
+          </div>
+          <div class="card-body">
+            <p class="theme-title">Overall Quality and Classic Horror Influence</p>
+            
+            <p class="note">Streamers say the game is high quality and fun, and enjoy its Resident Evil and Silent Hill influence.</p>
+            
+            <ul class="quotes"><li>“I think it has a lot of good stuff going on for it” <span class="ts">Streamer G · 3h57m</span></li>
+<li>“This is like a 9 out of 10 game” <span class="ts">Streamer D · 1h34m</span></li>
+<li>“You could tell this game has been heavily influenced by it and I love it” <span class="ts">Streamer I · 1h57m</span></li></ul>
+            
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <span class="count">2</span>
+            <span class="count-label">streamers</span>
+          </div>
+          <div class="card-body">
+            <p class="theme-title">Emotional Story and Characters</p>
+            
+            <p class="note">Streamers are moved by the story and feel sympathy for the family girls and their dolls.</p>
+            
+            <ul class="quotes"><li>“Oh man, this story is sad, okay?” <span class="ts">Streamer C · 2h54m</span></li>
+<li>“i feel bad for these girls” <span class="ts">Streamer E · 2h22m</span></li></ul>
+            
+          </div>
+        </div>
+
+  <h2>Memorable moments <span style="color:var(--accent)">●</span></h2>
+<p class="snippet">Single moments that stick with you — a scare, a laugh, an unexpected death. Not recurring patterns: the most human side of the feedback. Each link opens the VOD at the exact instant.</p>
+
+        <div class="card">
+          <div class="card-head"><div class="mtype">😱 scare</div></div>
+          <div class="card-body">
+            <p class="theme-title">Startled by a doll appearing out of nowhere in the mansion</p>
+            
+            <p class="evidence"><span class="ts">“what the fuck oh my god who the fuck is that hello dude that scared the shit out of me” — Streamer J · 0h30m</span></p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><div class="mtype">✨ delight</div></div>
+          <div class="card-body">
+            <p class="theme-title">Streamer narrowly defeats boss with almost no health remaining</p>
+            
+            <p class="evidence"><span class="ts">“i fucking did it holy shit with like no hp left oh my god oh oh shit you should be more careful” — Streamer J · 2h30m</span></p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><div class="mtype">😄 funny</div></div>
+          <div class="card-body">
+            <p class="theme-title">Streamer jokes about being one jump scare away from losing bladder control</p>
+            
+            <p class="evidence"><span class="ts">“We&#x27;re, like, one jump scare away from, like, skid mark status, alright?” — Streamer D · 0h10m</span></p>
+          </div>
+        </div>
+
+  <h2>Playtime per streamer</h2>
+  <p class="snippet">Minutes each streamer ACTUALLY played the game (reliable, from the category filter), summing their sessions. The closing reason is a TENTATIVE automatic hint: it isn't always possible to know exactly why they stop.</p>
+  <table>
+    <tr><th>Streamer</th><th>Minutes played</th><th>Closing reason (tentative)</th></tr>
+    
+        <tr>
+          <td>Streamer G</td>
+          <td class="num">212.8 min</td>
+          <td class="snippet"><em>tentative:</em> They ran out of ammo and time, explicitly stating they need to end stream to prepare dinner despite feeling close to the end. <span class="ts">“I&#x27;m out of time. So, we&#x27;ll pick this up again pretty soon”</span></td>
+        </tr>
+
+        <tr>
+          <td>Streamer E</td>
+          <td class="num">202.0 min</td>
+          <td class="snippet"><em>tentative:</em> They completed the game, reaching the ending sequence with the final ritual and credits. <span class="ts">“Looks like our game is coming to an end”</span></td>
+        </tr>
+
+        <tr>
+          <td>Streamer C</td>
+          <td class="num">180.0 min</td>
+          <td class="snippet"><em>tentative:</em> Reached the ending and credits; liked it overall but found combat and item pickups frustrating. <span class="ts">“That was [game title]”</span></td>
+        </tr>
+
+        <tr>
+          <td>Streamer J</td>
+          <td class="num">177.3 min</td>
+          <td class="snippet"><em>tentative:</em> They completed the game on hard difficulty and provided a full review of their experience. <span class="ts">“I finished the game on hard difficulty chat. We did it.”</span></td>
+        </tr>
+
+        <tr>
+          <td>Streamer H</td>
+          <td class="num">162.3 min</td>
+          <td class="snippet"><em>tentative:</em> They completed the game, as evidenced by the ending credits sequence and explicit confirmation of finishing. <span class="ts">“Thanks for playing. By [developer].”</span></td>
+        </tr>
+
+        <tr>
+          <td>Streamer F</td>
+          <td class="num">141.7 min</td>
+          <td class="snippet"><em>tentative:</em> Beat the final boss and reached the ending at ~2h21m, wondering whether it was &#x27;like the first part of the game&#x27;. Liked the art style and the Ocarina-of-Time-like music, and rated it 6.5/10. The stream then switched to Clair Obscur: Expedition 33 without changing the Twitch category; that tail is excluded from the playtime. <span class="ts">“guys if i have to rate this game i give this game a i give this game a 6.5 out of 10”</span></td>
+        </tr>
+
+        <tr>
+          <td>Streamer M</td>
+          <td class="num">138.4 min</td>
+          <td class="snippet"><em>tentative:</em> Reached the ending sequence and the credits, then closed the stream. <span class="ts">“Looks like our game is coming to a end.”</span></td>
+        </tr>
+
+        <tr>
+          <td>Streamer I</td>
+          <td class="num">131.8 min</td>
+          <td class="snippet"><em>tentative:</em> They completed the game, reaching the ending sequence with the exorcism ritual and farewell to characters, then gave it a 10/10 rating. <span class="ts">“10 out of 10. We&#x27;ll play again.”</span></td>
+        </tr>
+
+        <tr>
+          <td>Streamer N</td>
+          <td class="num">131.5 min</td>
+          <td class="snippet"><em>tentative:</em> They stopped playing because their grocery delivery arrived earlier than expected, interrupting the stream. <span class="ts">“My groceries is about to be here, bro.”</span></td>
+        </tr>
+
+        <tr>
+          <td>Streamer K</td>
+          <td class="num">120.0 min</td>
+          <td class="snippet"><em>tentative:</em> They completed the game, defeating the final boss and watching the ending cutscene with credits. <span class="ts">“we did it we beat it all in one stream”</span></td>
+        </tr>
+
+        <tr>
+          <td>Streamer B</td>
+          <td class="num">116.7 min</td>
+          <td class="snippet"><em>tentative:</em> They stopped playing after becoming frustrated with being unable to find a key to progress, deciding to end the stream rather than spend hours searching. <span class="ts">“I think I&#x27;m just gonna end stream for the night”</span></td>
+        </tr>
+
+        <tr>
+          <td>Streamer D</td>
+          <td class="num">114.1 min</td>
+          <td class="snippet"><em>tentative:</em> They completed the game, watched the ending cutscene and credits, and explicitly praised it as finished. <span class="ts">“Looks like our game is coming to an end.”</span></td>
+        </tr>
+
+        <tr>
+          <td>Streamer A</td>
+          <td class="num">103.2 min</td>
+          <td class="snippet"><em>tentative:</em> They stopped playing due to a persistent bug preventing weapon switching from knife back to pistol, making the game unplayable as intended. <span class="ts">“game made us switch to our knife and we aren&#x27;t even running fat right”</span></td>
+        </tr>
+
+        <tr>
+          <td>Streamer L</td>
+          <td class="num">68.1 min</td>
+          <td class="snippet"><em>tentative:</em> Reached the ending and gave a positive verdict: &#x27;pretty good&#x27; for an indie game. <span class="ts">“This game wasn&#x27;t bad. Especially for indie game.”</span></td>
+        </tr>
+
+        <tr>
+          <td>Streamer O</td>
+          <td class="num">60.4 min</td>
+          <td class="snippet"><em>tentative:</em> They stopped playing because it was late (11:26 PM) and they had work in the morning, deciding to continue the game in a future stream. <span class="ts">“i think i&#x27;ll leave it off for here and then i&#x27;ll stream again tomorrow”</span></td>
+        </tr>
+  </table>
+
+  <footer>
+    <strong>About this report.</strong> Based on 34.3 hours of the game gameplay from 15 real streamers. Every finding links to the exact moment in the stream, so your team can watch the footage and judge it firsthand. Only genuine the game gameplay is included.
+  </footer>
+</div>
+</body>
+</html>
