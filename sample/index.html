@@ -4,6 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Sample report · Playsignal</title>
+<meta name="description" content="A real Playsignal playtest report from an indie survival horror launch, with the game and streamer names removed.">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<meta property="og:title" content="Sample report · Playsignal">
+<meta property="og:description" content="What 15 streamers loved, where they got stuck and what broke.">
+<meta property="og:image" content="https://playsignal.games/og.png">
+<meta name="twitter:card" content="summary_large_image">
 <style>
   /* Estilo de marca (playsignal.games): fondo oscuro, resplandor violeta y tarjetas con marco
      translúcido iluminado. Se imprime igual en el PDF (print-color-adjust: exact). */
@@ -87,7 +93,19 @@
   .empty { color:var(--muted); font-style:italic; }
   footer { margin-top:48px; padding-top:16px; border-top:1px solid var(--line);
     font-size:12px; color:var(--muted); }
-  @media (max-width:640px) { .tiles { grid-template-columns:repeat(2,1fr); } }
+  @media (max-width:640px) {
+    .tiles { grid-template-columns:repeat(2,1fr); }
+    .wrap { padding:0 16px 48px; }
+    .card { padding:12px; gap:12px; }
+    .card-head { flex-basis:48px; padding-right:8px; }
+    /* La tabla de tiempo de juego se apila en móvil: una fila = un bloque (si no, se sale de la pantalla). */
+    .tablecard table, .tablecard tbody, .tablecard tr, .tablecard td { display:block; width:auto; }
+    .tablecard tr:first-child { display:none; }
+    .tablecard tr { padding:10px 0; border-bottom:1px solid var(--line); }
+    .tablecard tr:last-child { border-bottom:none; }
+    .tablecard td { border:none; padding:2px 4px; text-align:left; }
+    .tablecard td:first-child { font-weight:700; display:inline-block; }
+    .tablecard td.num { display:inline-block; color:var(--muted); } }
   @page { size:A4; margin:12mm 0; background:var(--bg); }
   @media print {
     .card, .tile, .takeaways, tr { break-inside:avoid; }
@@ -99,7 +117,8 @@
   background:rgba(157,136,255,.12);border:1px solid rgba(190,175,255,.28);color:#eeedf7;
   font-size:14.5px;line-height:1.5;position:relative;z-index:2}
 .sample-banner a{display:inline-block;margin-left:6px;color:#9d88ff;font-weight:600}
-span.ts{color:#9d88ff;white-space:nowrap}
+span.ts{color:#9d88ff}
+ul.quotes span.ts{white-space:nowrap}
 .spotc{display:none}
 </style>
 </head>
@@ -130,7 +149,7 @@ span.ts{color:#9d88ff;white-space:nowrap}
 <li><strong>What players love most</strong> (4 streamers): Art Direction and Visual Style — Streamers consistently praise the game&#x27;s art direction, retro aesthetic, and overall visual design as standout elements.</li></ul>
 
   <h2>Fix first: bugs and blockers <span style="color:var(--complaint)">●</span></h2>
-<p class="snippet">Technical problems streamers hit live. Listed even if only one streamer hit them: each links to the exact moment so your team can reproduce it.</p>
+<p class="snippet">Technical problems streamers hit live. Listed even if only one streamer hit them: in a delivered report, each links to the exact moment so your team can reproduce it.</p>
 
         <div class="card">
           <div class="card-head">
@@ -203,7 +222,7 @@ span.ts{color:#9d88ff;white-space:nowrap}
         </div>
 
   <h2>Recurring complaints <span style="color:var(--complaint)">●</span></h2>
-  <p class="snippet">Sorted by number of streamers who mention it. Each link opens the VOD at the exact minute.</p>
+  <p class="snippet">Sorted by number of streamers who mention it. In a delivered report, each quote links to that exact minute.</p>
   
         <div class="card">
           <div class="card-head">
@@ -425,7 +444,7 @@ span.ts{color:#9d88ff;white-space:nowrap}
         </div>
 
   <h2>Memorable moments <span style="color:var(--accent)">●</span></h2>
-<p class="snippet">Single moments that stick with you — a scare, a laugh, an unexpected death. Not recurring patterns: the most human side of the feedback. Each link opens the VOD at the exact instant.</p>
+<p class="snippet">Single moments that stick with you — a scare, a laugh, an unexpected death. Not recurring patterns: the most human side of the feedback. In a delivered report, each one links to that exact instant.</p>
 
         <div class="card">
           <div class="card-head"><div class="mtype">😱 scare</div></div>
@@ -455,7 +474,7 @@ span.ts{color:#9d88ff;white-space:nowrap}
         </div>
 
   <h2>Playtime per streamer</h2>
-  <p class="snippet">Minutes each streamer ACTUALLY played the game (reliable, from the category filter), summing their sessions. The closing reason is a TENTATIVE automatic hint: it isn't always possible to know exactly why they stop.</p>
+  <p class="snippet">Minutes each streamer actually spent playing the game, adding up their sessions. The closing reason is our reading of why they stopped: streamers don't always say.</p>
   <div class="tablecard"><table>
     <tr><th>Streamer</th><th>Minutes played</th><th>Closing reason (tentative)</th></tr>
     
@@ -551,7 +570,7 @@ span.ts{color:#9d88ff;white-space:nowrap}
   </table></div>
 
   <footer>
-    <strong>About this report.</strong> Based on 34.3 hours of the game gameplay from 15 real streamers. Every finding links to the exact moment in the stream, so your team can watch the footage and judge it firsthand. Only genuine the game gameplay is included.
+    <strong>About this report.</strong> Based on 34.3 hours of gameplay from 15 real streamers. In a delivered report, every finding links to the exact moment in the stream, so your team can watch the footage and judge it firsthand. Only genuine gameplay is included.
   </footer>
 </div>
 </body>
