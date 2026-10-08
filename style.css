@@ -59,7 +59,7 @@ header.top { position: sticky; top: 0; z-index: 10; backdrop-filter: blur(14px);
   background: color-mix(in srgb, var(--bg) 60%, transparent); border-bottom: 1px solid var(--line); }
 header.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 64px; }
 .logo { font-weight: 800; font-size: 20px; color: var(--text); text-decoration: none; letter-spacing: -0.02em; display: flex; align-items: center; }
-.logo i { width: 22px; height: 22px; border-radius: 7px; background: linear-gradient(135deg, var(--accent), var(--accent-2)); display: inline-block; margin-right: 8px; }
+.logo .mark { width: 26px; height: 26px; margin-right: 8px; display: block; }
 .logo span { color: var(--accent); }
 nav a { color: var(--muted); text-decoration: none; margin-left: 22px; font-size: 15px; }
 nav a:hover { color: var(--text); }
@@ -69,7 +69,8 @@ nav a:hover { color: var(--text); }
   background: var(--glass); border: 1px solid var(--line); color: var(--muted); backdrop-filter: blur(8px); }
 .hero h1 { font-size: clamp(38px, 6.4vw, 72px); line-height: 1.04; letter-spacing: -0.035em; margin: 22px auto 0; max-width: 13em; }
 .hero h1 em { font-style: normal; background: linear-gradient(100deg, var(--accent), var(--accent-2) 55%, var(--accent-3));
-  -webkit-background-clip: text; background-clip: text; color: transparent; }
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  white-space: nowrap; display: inline-block; padding: 0 0.04em 0.1em; }
 .hero p.lead { font-size: 20px; color: var(--muted); max-width: 36em; margin: 24px auto 0; }
 .ctas { margin-top: 34px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
 .cta { display: inline-block; padding: 14px 24px; border-radius: 12px; font-weight: 600; text-decoration: none;
@@ -103,7 +104,7 @@ section p.sub { color: var(--muted); max-width: 40em; margin-bottom: 36px; font-
 .quote { position: relative; border-radius: 24px; padding: 48px; overflow: hidden;
   background: linear-gradient(120deg, color-mix(in srgb, var(--accent) 18%, var(--glass-strong)), var(--glass-strong));
   border: 1px solid var(--line); backdrop-filter: blur(14px); }
-.quote::before { content: "\201C"; position: absolute; top: -30px; left: 24px; font-size: 180px; line-height: 1;
+.quote::before { content: "\201C"; position: absolute; top: 14px; right: 28px; font-size: 120px; line-height: 1;
   color: var(--accent); opacity: 0.18; font-family: Georgia, serif; }
 .quote blockquote { position: relative; font-size: clamp(21px, 2.6vw, 28px); line-height: 1.4; letter-spacing: -0.015em; max-width: 30em; }
 .quote cite { display: flex; align-items: center; gap: 12px; margin-top: 22px; font-style: normal; }
@@ -146,6 +147,13 @@ footer { padding: 40px 0 60px; color: var(--muted); font-size: 14px; border-top:
   .sample { flex-direction: column; }
   .sample .mock { flex: none; width: 100%; transform: none; }
   nav a:not(.keep) { display: none; }
-  .hero { padding: 64px 0 56px; }
-  .quote { padding: 32px 24px; }
+  .hero { padding: 48px 0 40px; }
+  .hero h1 { font-size: 36px; }
+  .hero p.lead { font-size: 17.5px; }
+  section { padding: 40px 0; }
+  section p.sub { margin-bottom: 24px; }
+  .stats { margin-top: 40px; }
+  .quote { padding: 28px 22px; }
+  .quote::before { font-size: 90px; top: 8px; right: 18px; }
+  .contact { padding: 40px 20px; }
 }
