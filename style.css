@@ -15,8 +15,9 @@
   --blob-b: rgba(196, 76, 255, 0.28);
   --blob-c: rgba(47, 196, 232, 0.26);
 }
+/* Tema: automático según el dispositivo; el botón de sol/luna fija data-theme="light"|"dark" en <html>. */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
     --bg: #0d0c16;
     --text: #eeedf7;
     --muted: #a7a4c0;
@@ -31,6 +32,29 @@
     --blob-c: rgba(47, 196, 232, 0.20);
   }
 }
+:root[data-theme="dark"] {
+  --bg: #0d0c16;
+  --text: #eeedf7;
+  --muted: #a7a4c0;
+  --accent: #9d88ff;
+  --accent-2: #d98cff;
+  --accent-3: #5fd6f2;
+  --line: rgba(190, 175, 255, 0.13);
+  --glass: rgba(26, 24, 42, 0.55);
+  --glass-strong: rgba(30, 28, 48, 0.78);
+  --blob-a: rgba(108, 76, 255, 0.40);
+  --blob-b: rgba(196, 76, 255, 0.26);
+  --blob-c: rgba(47, 196, 232, 0.20);
+}
+.theme-toggle { margin-left: 18px; width: 36px; height: 36px; border-radius: 10px; border: 1px solid var(--line);
+  background: var(--glass); color: var(--text); cursor: pointer; display: inline-flex; align-items: center;
+  justify-content: center; flex: none; }
+.theme-toggle:hover { border-color: color-mix(in srgb, var(--accent) 45%, var(--line)); }
+.theme-toggle svg { width: 18px; height: 18px; }
+.theme-toggle .sun { display: none; }
+:root[data-resolved="dark"] .theme-toggle .sun { display: block; }
+:root[data-resolved="dark"] .theme-toggle .moon { display: none; }
+nav { display: flex; align-items: center; }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 body {
