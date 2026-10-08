@@ -6,45 +6,58 @@
   <title>Playsignal: playtest feedback from real streams</title>
   <meta name="description" content="We watch how streamers actually play your game and turn it into a playtest report: what they loved, where they got stuck and what broke, each finding tied to the exact minute.">
   <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
 </head>
 <body>
+  <div class="aurora" aria-hidden="true"><div class="blob a"></div><div class="blob b"></div><div class="blob c"></div></div>
+  <div class="grain" aria-hidden="true"></div>
+
   <header class="top">
     <div class="wrap">
-      <a class="logo" href="./">play<span>signal</span></a>
+      <a class="logo" href="./"><i></i>play<span>signal</span></a>
       <nav>
         <a href="#how">How it works</a>
         <a href="#report">The report</a>
-        <a href="sample/">Sample</a>
-        <a href="#contact">Contact</a>
+        <a class="keep" href="sample/">Sample</a>
+        <a class="keep" href="#contact">Contact</a>
       </nav>
     </div>
   </header>
 
   <main>
     <div class="wrap hero">
+      <span class="badge">Playtest reports for indie studios and publishers</span>
       <h1>Your game is already being playtested. <em>On stream.</em></h1>
       <p class="lead">Every week, independent streamers play your game for hours and say out loud what they love, where they get stuck and what breaks. Playsignal turns those hours into a playtest report your team can act on, with every finding tied to the exact minute it happened.</p>
-      <a class="cta" href="sample/">See a sample report</a>
-      <a class="cta ghost" href="#contact">Ask about your game</a>
+      <div class="ctas">
+        <a class="cta" href="sample/">See a sample report</a>
+        <a class="cta ghost" href="#contact">Ask about your game</a>
+      </div>
+      <div class="stats">
+        <div class="stat"><b>15–30</b><span>independent streamers per report</span></div>
+        <div class="stat"><b>80–150 h</b><span>of real play, start to finish</span></div>
+        <div class="stat"><b>To the minute</b><span>every finding tied to the moment it happened</span></div>
+      </div>
     </div>
 
     <section id="how">
-      <div class="wrap">
-        <h2>How it works</h2>
-        <p class="sub">No builds to send, no testers to recruit. We work from what real players already did on stream.</p>
+      <div class="wrap reveal">
+        <div class="eyebrow">How it works</div>
+        <h2>No builds to send. No testers to recruit.</h2>
+        <p class="sub">We work from what real players already did on stream.</p>
         <div class="grid">
           <div class="card">
-            <div class="step">1 · Collect</div>
+            <div class="step">1</div>
             <h3>Real sessions, at scale</h3>
-            <p>We gather post-launch streams of your game from 15 to 30 independent streamers, often 80 to 150 hours of play, including people who played it through to the end.</p>
+            <p>We gather post-launch streams of your game from independent streamers, including people who played it through to the end.</p>
           </div>
           <div class="card">
-            <div class="step">2 · Analyse</div>
+            <div class="step">2</div>
             <h3>Only what's about your game</h3>
             <p>We separate real gameplay from chat, other games and in-game text read aloud, then group what players said into recurring findings.</p>
           </div>
           <div class="card">
-            <div class="step">3 · Review</div>
+            <div class="step">3</div>
             <h3>Checked by a human</h3>
             <p>Every quote is reviewed in context before it reaches you, so each finding is something a player really said about your game.</p>
           </div>
@@ -53,9 +66,10 @@
     </section>
 
     <section id="report">
-      <div class="wrap">
-        <h2>What's in the report</h2>
-        <p class="sub">Strengths and weaknesses, side by side, with the evidence for each one.</p>
+      <div class="wrap reveal">
+        <div class="eyebrow">The report</div>
+        <h2>Strengths and weaknesses, side by side</h2>
+        <p class="sub">With the evidence for each one, counted by how many players it affected.</p>
         <div class="grid">
           <div class="card">
             <h3><span class="dot" style="background:var(--accent)"></span>Executive summary</h3>
@@ -86,24 +100,25 @@
     </section>
 
     <section>
-      <div class="wrap">
+      <div class="wrap reveal">
         <div class="quote">
-          <blockquote>"It is especially valuable that both the strengths and weaknesses are analyzed. This is genuinely very useful material."</blockquote>
-          <cite>Indie developer, after receiving the report for their launch</cite>
+          <blockquote>It is especially valuable that both the strengths and weaknesses are analyzed. This is genuinely very useful material.</blockquote>
+          <cite><i>R</i><div><b>Rosemary</b><span>Rosenshine Games</span></div></cite>
         </div>
       </div>
     </section>
 
     <section id="sample">
-      <div class="wrap">
+      <div class="wrap reveal">
         <div class="sample">
           <div class="mock" aria-hidden="true">
-            <div class="bar"></div>
-            <div><span class="n">7</span> of 15 streamers lost track of where to go next</div>
-            <div class="q">"I have no idea where I'm supposed to go." · Streamer C · 0h52m</div>
-            <div class="q">"Where's the storeroom?" · Streamer H · 1h31m</div>
+            <div class="bar">Where players get stuck</div>
+            <div class="row"><span class="n">7</span><span>of 15 streamers lost track of where to go next</span></div>
+            <div class="q">"It just says, use the family crest, but I have not seen where" · Streamer D · ▶ 0h52m</div>
+            <div class="q">"Could you be a little more consistent with your telegraphs?" · Streamer K</div>
           </div>
           <div>
+            <div class="eyebrow">Sample</div>
             <h2>See a real report</h2>
             <p class="sub">A complete report from a recent indie horror launch, with the game and streamer names removed. Same structure, same level of detail as the one your team would receive.</p>
             <a class="cta" href="sample/">Open the sample report</a>
@@ -113,9 +128,10 @@
     </section>
 
     <section>
-      <div class="wrap">
-        <h2>Who it's for</h2>
-        <div class="grid two">
+      <div class="wrap reveal">
+        <div class="eyebrow">Who it's for</div>
+        <h2>Built for the people who ship the patch</h2>
+        <div class="grid two" style="margin-top:28px">
           <div class="card">
             <h3>Studios after launch</h3>
             <ul class="check">
@@ -137,10 +153,13 @@
     </section>
 
     <section id="contact">
-      <div class="wrap">
-        <h2>Ask about your game</h2>
-        <p class="sub">We're working with a small number of studios and publishers while we refine the format. If your game has launched or is about to, tell us which one and we'll check how much streamed play there is to work with.</p>
-        <a class="cta" href="mailto:hello@playsignal.games?subject=Playsignal%20report%20for%20our%20game">hello@playsignal.games</a>
+      <div class="wrap reveal">
+        <div class="contact">
+          <div class="eyebrow">Get in touch</div>
+          <h2>Ask about your game</h2>
+          <p class="sub">We're working with a small number of studios and publishers while we refine the format. If your game has launched or is about to, tell us which one and we'll check how much streamed play there is to work with.</p>
+          <a class="cta" href="mailto:hello@playsignal.games?subject=Playsignal%20report%20for%20our%20game">hello@playsignal.games</a>
+        </div>
       </div>
     </section>
   </main>
