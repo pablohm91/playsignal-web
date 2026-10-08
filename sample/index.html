@@ -5,58 +5,78 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Sample report · Playsignal</title>
 <style>
+  /* Estilo de marca (playsignal.games): fondo oscuro, resplandor violeta y tarjetas con marco
+     translúcido iluminado. Se imprime igual en el PDF (print-color-adjust: exact). */
   :root {
-    --bg:#ffffff; --fg:#1a1a2e; --muted:#5a5a72; --line:#e4e4ef;
-    --accent:#6d4aff; --accent-soft:#efeaff; --card:#faf9ff;
-    --complaint:#e05a5a; --praise:#2fa96b; --confusion:#e0a63a;
+    --bg:#0d0c16; --fg:#eeedf7; --muted:#a7a4c0; --line:rgba(190,175,255,.14);
+    --accent:#9d88ff; --accent-2:#d98cff; --accent-soft:rgba(157,136,255,.10); --card:#16152a;
+    --complaint:#ff7d7d; --praise:#4fd39a; --confusion:#f2bd5c;
+    --ring:0 0 0 6px rgba(255,255,255,.03), 0 0 0 7px rgba(190,175,255,.13);
   }
-  * { box-sizing:border-box; }
+  * { box-sizing:border-box; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  html { background:var(--bg); }
   body { margin:0; background:var(--bg); color:var(--fg);
     font:16px/1.55 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; }
-  .wrap { max-width:920px; margin:0 auto; padding:0 20px 64px; }
-  header.top { background:linear-gradient(135deg,var(--accent),#9b7bff); color:#fff;
-    padding:40px 20px; margin-bottom:32px; }
-  header.top .wrap { padding-bottom:0; }
-  header.top h1 { margin:0 0 6px; font-size:30px; }
-  header.top p { margin:0; opacity:.9; }
-  h2 { font-size:22px; margin:40px 0 14px; padding-bottom:8px; border-bottom:2px solid var(--line); }
-  .tiles { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin:0 0 24px; }
+  .wrap { max-width:920px; margin:0 auto; padding:0 28px 64px; }
+  header.top { position:relative; overflow:hidden; color:#fff; padding:44px 20px 40px; margin-bottom:24px;
+    border-bottom:1px solid var(--line); }
+  header.top::before { content:""; position:absolute; left:50%; top:-260px; width:760px; height:520px;
+    transform:translateX(-50%); background:radial-gradient(closest-side, rgba(124,92,255,.55), rgba(124,92,255,0));
+    pointer-events:none; }
+  header.top::after { content:""; position:absolute; right:-120px; top:-140px; width:420px; height:360px;
+    background:radial-gradient(closest-side, rgba(217,140,255,.30), rgba(217,140,255,0)); pointer-events:none; }
+  header.top .wrap { position:relative; z-index:1; padding-bottom:0; }
+  .brand { display:flex; align-items:center; font-weight:800; font-size:15px; letter-spacing:-.01em;
+    color:var(--fg); margin-bottom:18px; }
+  .brand i { width:18px; height:18px; border-radius:6px; margin-right:8px;
+    background:linear-gradient(135deg,#6c4cff,var(--accent-2)); display:inline-block; }
+  .brand span { color:var(--accent); }
+  header.top h1 { margin:0 0 8px; font-size:32px; letter-spacing:-.02em; line-height:1.15; }
+  header.top p { margin:0; color:var(--muted); }
+  h2 { font-size:22px; letter-spacing:-.01em; margin:44px 0 16px; padding-bottom:8px; border-bottom:1px solid var(--line); }
+  .tiles { display:grid; grid-template-columns:repeat(4,1fr); gap:18px; margin:0 8px 30px; }
   .refs { display:block; font-size:12px; color:var(--muted); margin-top:2px; }
   .qctx { display:block; font-size:12px; color:var(--muted); font-style:italic; margin:1px 0 4px; }
   .spotc { font-size:10px; text-transform:none; line-height:1.35; display:inline-block; margin-top:6px; letter-spacing:0; }
-  .takeaways li { margin-bottom:8px; }
-  .tile { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:16px; text-align:center; }
-  .tile-num { font-size:26px; font-weight:700; color:var(--accent); }
+  .takeaways li { margin-bottom:9px; }
+  .tile { background:var(--card); border:1px solid rgba(190,175,255,.2); border-radius:14px; padding:16px; text-align:center;
+    box-shadow:var(--ring), 0 -10px 40px -18px rgba(124,92,255,.7); }
+  .tile-num { font-size:26px; font-weight:800; background:linear-gradient(100deg,var(--accent),var(--accent-2));
+    -webkit-background-clip:text; background-clip:text; color:transparent; }
   .tile-label { font-size:12px; color:var(--muted); }
-  .takeaways { background:var(--accent-soft); border-radius:12px; padding:16px 16px 16px 36px; }
-  .card { display:flex; gap:16px; background:var(--card); border:1px solid var(--line);
-    border-radius:12px; padding:16px; margin-bottom:12px; }
+  .takeaways { background:linear-gradient(160deg, rgba(124,92,255,.20), rgba(22,21,42,.95) 55%);
+    border:1px solid rgba(190,175,255,.24); border-radius:18px; padding:20px 22px 12px 40px; margin:0 8px 8px;
+    box-shadow:var(--ring), 0 -24px 70px -20px rgba(124,92,255,.8); }
+  .card { display:flex; gap:16px; background:var(--card); border:1px solid rgba(190,175,255,.18);
+    border-radius:16px; padding:18px; margin:0 8px 22px;
+    box-shadow:var(--ring), 0 -12px 44px -20px rgba(124,92,255,.65); }
   .card-head { flex:0 0 64px; text-align:center; border-right:1px solid var(--line); padding-right:12px; }
-  .count { font-size:30px; font-weight:800; color:var(--accent); display:block; line-height:1; }
+  .count { font-size:30px; font-weight:800; display:block; line-height:1;
+    background:linear-gradient(100deg,var(--accent),var(--accent-2)); -webkit-background-clip:text; background-clip:text; color:transparent; }
   .count-label { font-size:11px; color:var(--muted); text-transform:uppercase; }
-  .card-body { flex:1; }
+  .card-body { flex:1; min-width:0; }
   .theme-title { margin:0 0 4px; font-weight:700; font-size:16px; }
   .mtype { font-size:11px; font-weight:600; color:var(--muted); text-transform:capitalize;
     line-height:1.5; }
-  blockquote { margin:6px 0; font-size:15px; font-style:italic; color:#3a3a52; }
+  blockquote { margin:6px 0; font-size:15px; font-style:italic; color:#d9d6ee; }
   .note { margin:0 0 8px; color:var(--muted); }
-  .conflict { margin:0 0 6px; padding:6px 10px; background:#fdecec; border-left:3px solid var(--complaint);
-    border-radius:4px; font-size:13px; color:#8a2a2a; }
-  :root:not([data-theme="light"]) .conflict, :root[data-theme="dark"] .conflict { background:#3a1e1e; color:#f0b0b0; }
+  .conflict { margin:0 0 6px; padding:6px 10px; background:#3a1e1e; border-left:3px solid var(--complaint);
+    border-radius:4px; font-size:13px; color:#f0b0b0; }
   ul.quotes { margin:0; padding-left:18px; }
-  ul.quotes li { margin:3px 0; font-size:14px; }
+  ul.quotes li { margin:4px 0; font-size:14px; color:#dcdaf0; }
+  ul.quotes li::marker { color:var(--accent); }
   ul.quotes li a { color:var(--accent); text-decoration:none; white-space:nowrap; font-size:13px; }
   ul.quotes li a:hover { text-decoration:underline; }
   img.thumb { display:block; width:200px; border-radius:6px; margin:5px 0 12px;
     border:1px solid var(--line); }
   .flagged { margin-top:8px; font-size:12px; color:var(--muted); } .flagged li { margin:2px 0; }
-  .weak { font-size:12px; color:#b45309; margin:2px 0 6px; }
+  .weak { font-size:12px; color:var(--confusion); margin:2px 0 6px; }
   @media print { img.thumb { display:none !important; } .noprint { display:none !important; } }
   .evidence { margin:0; font-size:13px; }
   .evidence a, td a { color:var(--accent); text-decoration:none; }
   .evidence a:hover, td a:hover { text-decoration:underline; }
   table { width:100%; border-collapse:collapse; font-size:14px; }
-  th, td { text-align:left; padding:8px 10px; border-bottom:1px solid var(--line); vertical-align:top; }
+  th, td { text-align:left; padding:9px 10px; border-bottom:1px solid var(--line); vertical-align:top; }
   th { font-size:12px; text-transform:uppercase; color:var(--muted); }
   td.num { text-align:right; white-space:nowrap; font-variant-numeric:tabular-nums; }
   .snippet { color:var(--muted); font-size:13px; }
@@ -65,16 +85,20 @@
   footer { margin-top:48px; padding-top:16px; border-top:1px solid var(--line);
     font-size:12px; color:var(--muted); }
   @media (max-width:640px) { .tiles { grid-template-columns:repeat(2,1fr); } }
-  @media print { header.top { -webkit-print-color-adjust:exact; print-color-adjust:exact; }
-    .card, .tile { break-inside:avoid; }
+  @page { size:A4; margin:0; }
+  @media print {
+    body { padding:10mm 0; }
+    .card, .tile, .takeaways { break-inside:avoid; }
     h2 { break-after:avoid; break-inside:avoid; }
     h2 + p { break-after:avoid; break-inside:avoid; }
     h2 + p + .card, h2 + .card { break-before:avoid; } }
 
-.sample-banner{max-width:900px;margin:20px auto 0;padding:14px 18px;border-radius:12px;
-  background:#f1edff;border:1px solid #d9d0ff;color:#2a2350;font-size:14.5px;line-height:1.5}
-.sample-banner a{display:inline-block;margin-left:6px;color:#6c4cff;font-weight:600}
-span.ts{color:#6c4cff;white-space:nowrap}
+.sample-banner{max-width:864px;margin:24px auto 0;padding:14px 18px;border-radius:14px;
+  background:rgba(157,136,255,.12);border:1px solid rgba(190,175,255,.28);color:#eeedf7;
+  font-size:14.5px;line-height:1.5;position:relative;z-index:2}
+.sample-banner a{display:inline-block;margin-left:6px;color:#9d88ff;font-weight:600}
+span.ts{color:#9d88ff;white-space:nowrap}
+.spotc{display:none}
 </style>
 </head>
 <body>
@@ -86,6 +110,7 @@ span.ts{color:#6c4cff;white-space:nowrap}
 </div>
 
 <header class="top"><div class="wrap">
+  <div class="brand"><i></i>play<span>signal</span></div>
   <h1>Playtesting from streams · Sample report</h1>
   <p>Report on 15 streamers · generated 2026-10-08 · Playsignal</p>
 </div></header>
