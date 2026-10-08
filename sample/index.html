@@ -11,7 +11,8 @@
     --bg:#0d0c16; --fg:#eeedf7; --muted:#a7a4c0; --line:rgba(190,175,255,.14);
     --accent:#9d88ff; --accent-2:#d98cff; --accent-soft:rgba(157,136,255,.10); --card:#16152a;
     --complaint:#ff7d7d; --praise:#4fd39a; --confusion:#f2bd5c;
-    --ring:0 0 0 6px rgba(255,255,255,.03), 0 0 0 7px rgba(190,175,255,.13);
+    --frame:7px solid rgba(255,255,255,.035);
+    --ring:inset 0 0 0 1px rgba(190,175,255,.2), 0 0 0 1px rgba(190,175,255,.14);
   }
   * { box-sizing:border-box; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
   html { background:var(--bg); }
@@ -20,9 +21,9 @@
   .wrap { position:relative; z-index:1; max-width:920px; margin:0 auto; padding:0 28px 64px; }
   /* Resplandor de fondo detrás del contenido, como en la web. Fijo: en el PDF se repite en cada página. */
   body::before { content:""; position:fixed; inset:0; z-index:0; pointer-events:none;
-    background:radial-gradient(620px 520px at 8% 32%, rgba(108,76,255,.30), rgba(108,76,255,0) 70%),
-      radial-gradient(540px 480px at 96% 62%, rgba(196,76,255,.20), rgba(196,76,255,0) 70%),
-      radial-gradient(580px 520px at 30% 102%, rgba(47,196,232,.14), rgba(47,196,232,0) 70%); }
+    background:radial-gradient(600px 420px at 8% 34%, rgba(108,76,255,.30), rgba(108,76,255,0) 70%),
+      radial-gradient(520px 400px at 96% 60%, rgba(196,76,255,.20), rgba(196,76,255,0) 70%),
+      radial-gradient(560px 300px at 30% 80%, rgba(47,196,232,.13), rgba(47,196,232,0) 70%); }
   header.top { position:relative; z-index:2; background:var(--bg); color:#fff; padding:40px 20px 34px;
     margin-bottom:24px; border-bottom:1px solid var(--line); }
   header.top .wrap { padding-bottom:0; }
@@ -34,25 +35,26 @@
   header.top h1 { margin:0 0 8px; font-size:32px; letter-spacing:-.02em; line-height:1.15; }
   header.top p { margin:0; color:var(--muted); }
   h2 { font-size:22px; letter-spacing:-.01em; margin:44px 0 16px; padding-bottom:8px; border-bottom:1px solid var(--line); }
-  .tiles { display:grid; grid-template-columns:repeat(4,1fr); gap:18px; margin:0 8px 30px; }
+  .tiles { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin:0 0 26px; }
   .refs { display:block; font-size:12px; color:var(--muted); margin-top:2px; }
   .qctx { display:block; font-size:12px; color:var(--muted); font-style:italic; margin:1px 0 4px; }
-  .spotc { font-size:10px; text-transform:none; line-height:1.35; display:inline-block; margin-top:6px; letter-spacing:0; }
+  .spotc { display:none; }
   .takeaways li { margin-bottom:9px; }
-  .tile { background:var(--card); border:1px solid rgba(190,175,255,.2); border-radius:14px; padding:16px; text-align:center;
-    box-shadow:var(--ring), 0 -10px 40px -18px rgba(124,92,255,.7); }
-  .tile-num { font-size:26px; font-weight:800; background:linear-gradient(100deg,var(--accent),var(--accent-2));
-    -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .tile { background:var(--card); border:var(--frame); background-clip:padding-box; border-radius:20px; padding:14px; text-align:center;
+    box-shadow:var(--ring), 0 -10px 34px -20px rgba(124,92,255,.7); }
+  .tile-num { font-size:26px; font-weight:800; color:#b9a5ff; }
   .tile-label { font-size:12px; color:var(--muted); }
   .takeaways { background:linear-gradient(160deg, rgba(124,92,255,.20), rgba(22,21,42,.95) 55%);
-    border:1px solid rgba(190,175,255,.24); border-radius:18px; padding:20px 22px 12px 40px; margin:0 8px 8px;
-    box-shadow:var(--ring), 0 -24px 70px -20px rgba(124,92,255,.8); }
-  .card { display:flex; gap:16px; background:var(--card); border:1px solid rgba(190,175,255,.18);
-    border-radius:16px; padding:18px; margin:0 8px 22px;
-    box-shadow:var(--ring), 0 -12px 44px -20px rgba(124,92,255,.65); }
+    border:var(--frame); background-clip:padding-box; border-radius:24px; padding:18px 20px 10px 38px; margin:0 0 8px;
+    box-shadow:var(--ring), 0 -20px 60px -24px rgba(124,92,255,.8); }
+  .card { display:flex; gap:16px; background:var(--card); border:var(--frame); background-clip:padding-box;
+    border-radius:22px; padding:16px; margin:0 0 18px;
+    box-shadow:var(--ring), 0 -10px 36px -22px rgba(124,92,255,.65); }
+  .tablecard { background:var(--card); border:var(--frame); background-clip:padding-box; border-radius:22px;
+    padding:6px 12px; box-shadow:var(--ring), 0 -10px 36px -22px rgba(124,92,255,.65); }
+  .tablecard tr:last-child td { border-bottom:none; }
   .card-head { flex:0 0 64px; text-align:center; border-right:1px solid var(--line); padding-right:12px; }
-  .count { font-size:30px; font-weight:800; display:block; line-height:1;
-    background:linear-gradient(100deg,var(--accent),var(--accent-2)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .count { font-size:30px; font-weight:800; display:block; line-height:1; color:#b9a5ff; }
   .count-label { font-size:11px; color:var(--muted); text-transform:uppercase; }
   .card-body { flex:1; min-width:0; }
   .theme-title { margin:0 0 4px; font-weight:700; font-size:16px; }
@@ -85,10 +87,9 @@
   footer { margin-top:48px; padding-top:16px; border-top:1px solid var(--line);
     font-size:12px; color:var(--muted); }
   @media (max-width:640px) { .tiles { grid-template-columns:repeat(2,1fr); } }
-  @page { size:A4; margin:0; }
+  @page { size:A4; margin:12mm 0; background:var(--bg); }
   @media print {
-    body { padding:10mm 0; }
-    .card, .tile, .takeaways { break-inside:avoid; }
+    .card, .tile, .takeaways, tr { break-inside:avoid; }
     h2 { break-after:avoid; break-inside:avoid; }
     h2 + p { break-after:avoid; break-inside:avoid; }
     h2 + p + .card, h2 + .card { break-before:avoid; } }
@@ -440,7 +441,7 @@ span.ts{color:#9d88ff;white-space:nowrap}
 
   <h2>Playtime per streamer</h2>
   <p class="snippet">Minutes each streamer ACTUALLY played the game (reliable, from the category filter), summing their sessions. The closing reason is a TENTATIVE automatic hint: it isn't always possible to know exactly why they stop.</p>
-  <table>
+  <div class="tablecard"><table>
     <tr><th>Streamer</th><th>Minutes played</th><th>Closing reason (tentative)</th></tr>
     
         <tr>
@@ -532,7 +533,7 @@ span.ts{color:#9d88ff;white-space:nowrap}
           <td class="num">60.4 min</td>
           <td class="snippet"><em>tentative:</em> They stopped playing because it was late (11:26 PM) and they had work in the morning, deciding to continue the game in a future stream. <span class="ts">“i think i&#x27;ll leave it off for here and then i&#x27;ll stream again tomorrow”</span></td>
         </tr>
-  </table>
+  </table></div>
 
   <footer>
     <strong>About this report.</strong> Based on 34.3 hours of the game gameplay from 15 real streamers. Every finding links to the exact moment in the stream, so your team can watch the footage and judge it firsthand. Only genuine the game gameplay is included.
