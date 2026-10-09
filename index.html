@@ -17,8 +17,9 @@
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
   <script src="theme.js?v=1"></script>
-  <link rel="stylesheet" href="style.css?v=6">
-  <script src="script.js?v=5" defer></script>
+  <link rel="stylesheet" href="style.css?v=7">
+  <script src="script.js?v=6" defer></script>
+  <script data-goatcounter="https://playsignal.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </head>
 <body>
   <div class="aurora" aria-hidden="true"><div class="blob a"></div><div class="blob b"></div><div class="blob c"></div></div>
@@ -45,7 +46,7 @@
       <p class="lead">Every week, independent streamers play your game for hours and say out loud what they love, where they get stuck and what breaks. Playsignal turns those hours into a playtest report your team can act on, with every finding tied to the exact minute it happened.</p>
       <div class="ctas">
         <a class="cta" href="sample/">See a sample report</a>
-        <a class="cta ghost" href="#contact">Ask about your game</a>
+        <a class="cta ghost" href="#contact">Check your game for free</a>
       </div>
       <div class="stats">
         <div class="stat"><b>10–30</b><span>independent streamers per report</span></div>
@@ -206,17 +207,28 @@
             </ul>
           </div>
         </div>
-        <p class="note"><b>Free coverage check.</b> Send us the name of your game and we'll tell you how many streamers and hours of play there are to work with. <b>Early access:</b> we're doing the first reports free for a few studios and publishers, in exchange for honest feedback.</p>
+        <p class="note"><a href="#contact"><b>Free coverage check.</b></a> Send us the name of your game and we'll tell you how many streamers and hours of play there are to work with. <b>Early access:</b> we're doing the first reports free for a few studios and publishers, in exchange for honest feedback.</p>
       </div>
     </section>
 
     <section id="contact">
       <div class="wrap reveal">
         <div class="contact">
-          <div class="eyebrow">Get in touch</div>
-          <h2>Ask about your game</h2>
-          <p class="sub">We're working with a small number of studios and publishers while we refine the format. If your game has launched or is about to, tell us which one and we'll check how much streamed play there is to work with.</p>
-          <a class="cta" href="mailto:hello@playsignal.games?subject=Playsignal%20report%20for%20our%20game">hello@playsignal.games</a>
+          <div class="eyebrow">Free coverage check</div>
+          <h2>How much streamed play does your game have?</h2>
+          <p class="sub">Tell us the game and we'll send you, for free, how many streamers and hours of real play there are to work with. It works for games that have launched and for games launching soon. No commitment.</p>
+          <form class="check-form" action="https://formspree.io/f/xyekjydr" method="POST">
+            <label class="sr" for="cf-game">Game name or Steam link</label>
+            <input id="cf-game" name="game" type="text" required maxlength="200" placeholder="Game name or Steam link" autocomplete="off">
+            <label class="sr" for="cf-email">Your email</label>
+            <input id="cf-email" name="email" type="email" required maxlength="200" placeholder="Your email" autocomplete="email">
+            <input type="text" name="_gotcha" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+            <input type="hidden" name="_subject" value="Coverage check request">
+            <button class="cta" type="submit">Check my game →</button>
+            <p class="form-status" role="status" aria-live="polite"></p>
+          </form>
+          <p class="who">Pablo, founder of Playsignal, replies personally within one working day. Your email is only used to reply to you. <a href="https://www.linkedin.com/in/pablo-hern%C3%A1ndez-mar%C3%ADn-67a8a1442/" target="_blank" rel="noopener">LinkedIn</a></p>
+          <p class="or">Prefer email? <a href="mailto:hello@playsignal.games?subject=Playsignal%20report%20for%20our%20game">hello@playsignal.games</a></p>
           <div class="mail-alt">
             <button type="button" class="copy-mail" data-mail="hello@playsignal.games">Copy address</button>
             <span aria-hidden="true">·</span>
@@ -232,7 +244,7 @@
   <footer>
     <div class="wrap">
       Playsignal works only from public broadcasts. Streamers keep their own content: the report points your team to the original streams.
-      <br>© 2026 Playsignal
+      <br>© 2026 Playsignal · <a href="mailto:hello@playsignal.games">hello@playsignal.games</a> · <a href="https://www.linkedin.com/in/pablo-hern%C3%A1ndez-mar%C3%ADn-67a8a1442/" target="_blank" rel="noopener">LinkedIn</a>
     </div>
   </footer>
 </body>

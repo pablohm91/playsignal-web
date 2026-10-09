@@ -48,3 +48,33 @@
     });
   });
 })();
+
+// Formulario "Check your game": se envía a Formspree sin salir de la página y confirma en línea.
+// Sin JavaScript funciona igual (envío normal a Formspree, que muestra su página de gracias).
+(() => {
+  const form = document.querySelector(".check-form");
+  if (!form) return;
+  const status = form.querySelector(".form-status");
+  const btn = form.querySelector("button[type=submit]");
+  form.addEventListener("submit", async (ev) => {
+    ev.preventDefault();
+    const game = form.elements.game.value.trim();
+    form.elements._subject.value = "Coverage check: " + game.slice(0, 80);
+    btn.disabled = true;
+    status.className = "form-status";
+    status.textContent = "Sending…";
+    try {
+      const res = await fetch(form.action, { method: "POST", body: new FormData(form), headers: { Accept: "application/json" } });
+      if (!res.ok) throw new Error(String(res.status));
+      form.reset();
+      status.className = "form-status ok";
+      status.textContent = "Got it! I'll reply personally within one working day with the numbers for your game. — Pablo";
+      if (window.goatcounter && window.goatcounter.count) window.goatcounter.count({ path: "form-coverage-check", title: "Coverage check sent", event: true });
+    } catch (e) {
+      status.className = "form-status err";
+      status.textContent = "Something went wrong. Please email hello@playsignal.games instead.";
+    } finally {
+      btn.disabled = false;
+    }
+  });
+})();

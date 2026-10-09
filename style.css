@@ -169,6 +169,23 @@ p.note b { color: var(--text); }
   background: radial-gradient(120% 140% at 50% 0%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 70%), var(--glass);
   backdrop-filter: blur(14px); }
 .contact p.sub { margin: 0 auto 28px; }
+/* Formulario "Check your game" (Formspree) */
+.check-form { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; max-width: 760px; margin: 0 auto; }
+.check-form input:not(.hp) { flex: 1 1 240px; min-width: 0; padding: 14px 16px; border-radius: 12px; font: inherit; font-size: 16px;
+  color: var(--text); background: var(--glass-strong); border: 1px solid var(--line); outline: none; }
+.check-form input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 25%, transparent); }
+.check-form input::placeholder { color: var(--muted); }
+.check-form .cta { border: 0; cursor: pointer; font: inherit; font-weight: 600; font-size: 16px; }
+.check-form .cta:disabled { opacity: .6; cursor: default; transform: none; }
+.check-form .hp, .sr { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.form-status { flex-basis: 100%; margin: 4px 0 0; font-size: 15px; min-height: 1.2em; }
+.form-status.ok { color: var(--ok); font-weight: 600; }
+.form-status.err { color: var(--bad); }
+.contact p.who { margin: 18px auto 0; font-size: 14.5px; color: var(--muted); max-width: 40em; }
+.contact p.or { margin: 22px auto 0; font-size: 15px; color: var(--muted); }
+.contact p.who a, .contact p.or a, footer a, p.note a { color: var(--accent); text-decoration: none; font-weight: 600; }
+.contact .mail-alt { margin-top: 8px; font-size: 13.5px; }
+
 /* Alternativas al mailto: sin programa de correo configurado (Gmail/Outlook web) el enlace no abre nada */
 .mail-alt { margin-top: 16px; font-size: 14.5px; color: var(--muted); display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
 .mail-alt a, .mail-alt button { color: var(--accent); font: inherit; font-weight: 600; text-decoration: none; background: none; border: 0; padding: 0; cursor: pointer; }
