@@ -169,6 +169,10 @@ p.note b { color: var(--text); }
   background: radial-gradient(120% 140% at 50% 0%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 70%), var(--glass);
   backdrop-filter: blur(14px); }
 .contact p.sub { margin: 0 auto 28px; }
+/* Alternativas al mailto: sin programa de correo configurado (Gmail/Outlook web) el enlace no abre nada */
+.mail-alt { margin-top: 16px; font-size: 14.5px; color: var(--muted); display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+.mail-alt a, .mail-alt button { color: var(--accent); font: inherit; font-weight: 600; text-decoration: none; background: none; border: 0; padding: 0; cursor: pointer; }
+.mail-alt a:hover, .mail-alt button:hover { text-decoration: underline; }
 
 footer { padding: 40px 0 60px; color: var(--muted); font-size: 14px; border-top: 1px solid var(--line); }
 

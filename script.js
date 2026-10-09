@@ -28,3 +28,23 @@
     });
   }, { passive: true });
 })();
+
+// "Copy address": alternativa al mailto para quien no tiene programa de correo configurado.
+(() => {
+  document.querySelectorAll(".copy-mail").forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      const mail = btn.dataset.mail;
+      try {
+        await navigator.clipboard.writeText(mail);
+      } catch (e) {
+        const t = document.createElement("textarea");
+        t.value = mail; document.body.appendChild(t); t.select();
+        try { document.execCommand("copy"); } catch (e2) { /* sin portapapeles: la dirección ya está visible */ }
+        t.remove();
+      }
+      const old = btn.textContent;
+      btn.textContent = "Copied!";
+      setTimeout(() => { btn.textContent = old; }, 1600);
+    });
+  });
+})();
