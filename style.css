@@ -156,6 +156,9 @@ ul.check li::before { content: "✓"; position: absolute; left: 0; color: var(--
 .price .amount { font-size: 42px; font-weight: 800; letter-spacing: -0.03em; line-height: 1; margin-bottom: 18px; color: var(--text); }
 .price .amount small { font-size: 15px; font-weight: 600; color: var(--muted); letter-spacing: 0; margin-left: 4px; }
 .price ul.check li { font-size: 15px; }
+.price .buy { margin-top: auto; display: block; text-align: center; padding: 12px 18px; }
+.price ul.check { margin-bottom: 22px; }
+.price:not(.featured) .buy { background: var(--glass); color: var(--text); border: 1px solid var(--line); box-shadow: none; }
 .price.featured { border: 1.5px solid color-mix(in srgb, var(--accent) 55%, transparent);
   background: linear-gradient(160deg, color-mix(in srgb, var(--accent) 16%, var(--glass-strong)), var(--glass-strong));
   box-shadow: 0 24px 60px -30px var(--accent); }
@@ -217,3 +220,11 @@ footer { padding: 40px 0 60px; color: var(--muted); font-size: 14px; border-top:
   .quote::before { font-size: 90px; top: 8px; right: 18px; }
   .contact { padding: 40px 20px; }
 }
+
+/* Legal pages (/legal/, /terms/, /privacy/) */
+.hero.legal { text-align: left; max-width: 760px; }
+.hero.legal h1 { margin-left: 0; font-size: clamp(34px, 5vw, 52px); }
+.hero.legal p.lead { margin-left: 0; }
+.hero.legal h2 { font-size: 20px; margin: 36px 0 8px; letter-spacing: -0.01em; }
+.hero.legal p { color: var(--muted); line-height: 1.65; margin: 0 0 12px; }
+.hero.legal a { color: var(--accent); }
