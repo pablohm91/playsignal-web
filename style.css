@@ -227,4 +227,4 @@ footer { padding: 40px 0 60px; color: var(--muted); font-size: 14px; border-top:
 .hero.legal p.lead { margin-left: 0; }
 .hero.legal h2 { font-size: 20px; margin: 36px 0 8px; letter-spacing: -0.01em; }
 .hero.legal p { color: var(--muted); line-height: 1.65; margin: 0 0 12px; }
-.hero.legal a { color: var(--accent); }
+.hero.legal a:not(.cta) { color: var(--accent); }
