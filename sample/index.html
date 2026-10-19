@@ -148,7 +148,8 @@ a.step-card:hover{border-color:#9d88ff}
 .step-card,.step-card em{font-weight:400}
 .step-card b{font-weight:700}
 /* Misma cabecera en la vista previa y en el informe: al pasar de una página a otra no salta nada (19-oct). */
-@media screen{header.top{padding:40px 20px 34px!important;margin-bottom:24px!important}}
+@media screen{header.top{padding:40px 20px 34px!important;margin-bottom:24px!important}
+  header.top + .wrap > h2:first-child{margin-top:44px!important;margin-bottom:16px!important}}
 .sample-cta{max-width:864px;margin:40px auto 56px;padding:36px 28px;border-radius:20px;text-align:center;position:relative;z-index:2;
   background:radial-gradient(120% 140% at 50% 0%,rgba(157,136,255,.22),transparent 70%),rgba(26,24,42,.6);
   border:1px solid rgba(190,175,255,.28);color:#eeedf7}
